@@ -35,13 +35,12 @@ python loan_model.py          # Runs full analysis, saves plots to outputs/
 
 **Performance vs Baseline**: AUC-ROC improves from 0.7064 (rule-based) → 0.7243 (ML model). The ML model catches 65.5% of defaults (vs 26.2% for rule-based), with 188 false negatives vs 402. See `outputs/05_roc_pr_curves.png`.
 
-**Business Value**: At the profit-maximising threshold (0.52), the ML model saves **$99,740** vs the rule-based system on the evaluation portfolio — a 38.7% reduction in losses. The optimal threshold is slightly above 0.5 because a missed defaulter (65% LGD) costs 4× more than a wrongly rejected good customer (16% margin). See `outputs/15_profit_maximisation.png`.
+**Business Value**: At the profit-maximising threshold (0.52), the ML model saves **$99,740** vs the rule-based system on the evaluation portfoliom a 38.7% reduction in losses. The optimal threshold is slightly above 0.5 because a missed defaulter (65% LGD) costs 4× more than a wrongly rejected good customer (16% margin). See `outputs/15_profit_maximisation.png`.
 
-**False Negatives**: Of the 545 actual defaults, 200 slip through at the optimal threshold. These are genuinely deceptive cases — smaller loans (avg $1,451 vs $2,133 for caught defaults), verified income (92.6% vs 58.5%), and almost no overdrafts (4.3% vs 38.4%). The model is fooled by strong positive signals, not model weakness. See `outputs/11_false_negative_analysis.png`.
+**False Negatives**: Of the 545 actual defaults, 200 slip through at the optimal threshold. These are  deceptive cases with smaller loans (avg $1,451 vs $2,133 for caught defaults), verified income (92.6% vs 58.5%), and almost no overdrafts (4.3% vs 38.4%). The model is fooled by these strong positive signals. See `outputs/11_false_negative_analysis.png`.
 
 ## What I'd Do With More Time
 1. **Survival analysis** for ongoing applications instead of excluding them.
-2. **Calibration curves** — Ensure predicted probabilities match actual default rates (Platt scaling or isotonic regression).
 3. **Feature interactions** — e.g., low balance + overdrafts might be more than additive (partially explored via SHAP dependence plots).
 4. **Monitoring dashboard** — Drift detection, fairness metric tracking, and prediction distribution alerts for production deployment.
 5. **Larger dataset** — More historical data would likely improve performance; the model's learning curve had not fully plateaued at 1,836 training examples.
